@@ -1,0 +1,11 @@
+replicas: 1
+minimumMasterNodes: 1
+volumeClaimTemplate:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: longhorn
+tls:
+  enabled: true
+  existingSecret: elasticsearch-cert
