@@ -16,7 +16,7 @@ logstashPipeline:
     }
     output {
       elasticsearch {
-        hosts => ["https://elasticsearch.elk.svc.cluster.local:9200"]
+        hosts => ["https://elasticsearch-master.elk.svc.cluster.local:9200"]
         ssl => true
         cacert => "/usr/share/logstash/config/certs/tls.crt"
         index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
