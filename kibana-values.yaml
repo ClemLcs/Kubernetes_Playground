@@ -8,7 +8,7 @@ extraVolumes:
       secretName: elasticsearch-cert
 extraVolumeMounts:
   - name: certs
-    mountPath: /appli/elk/kibana/config/certs
+    mountPath: /usr/share/kibana/config/certs
     readOnly: true
 ingress:
   enabled: true
