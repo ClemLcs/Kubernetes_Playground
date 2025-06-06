@@ -1,0 +1,32 @@
+persistence:
+  enabled: true
+  storageClassName: longhorn
+  accessMode: ReadWriteOnce
+  size: 5Gi
+logstashConfig:
+  logstash.yml: |
+    http.host: 0.0.0.0
+    xpack.monitoring.enabled: false
+logstashPipeline:
+  logstash.conf: |
+    input {
+      beats {
+        port => 5044
+      }
+    }
+    output {
+      elasticsearch {
+        hosts => ["https://elasticsearch.elk.svc.cluster.local:9200"]
+        ssl => true
+        cacert => "/usr/share/logstash/config/certs/tls.crt"
+        index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
+      }
+    }
+extraVolumes:
+  - name: certs
+    secret:
+      secretName: elasticsearch-cert
+extraVolumeMounts:
+  - name: certs
+    mountPath: /usr/share/logstash/config/certs
+    readOnly: true
